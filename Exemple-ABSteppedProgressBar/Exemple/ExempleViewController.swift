@@ -45,8 +45,22 @@ class ExempleViewController: UIViewController {
     
     progressBar.backgroundShapeColor = UIColor(red: 231/255, green: 231/255, blue: 231/255, alpha: 1)
     progressBar.selectedBackgoundColor = UIColor(red: 64/255, green: 173/255, blue: 21/255, alpha: 1)
+    
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    let subtitleVerticalPosition: CGFloat = self.progressBar.frame.origin.y + self.progressBar.bounds.height + 5
+    for point in self.progressBar.centerPoints {
+      let realPoint = self.progressBar.convertPoint(point, toView: self.view)
+      let subtitle = UILabel(frame: CGRectMake(0, subtitleVerticalPosition, 40, 20))
+      subtitle.center.x = realPoint.x
+      subtitle.text = "Test"
+      self.view.addSubview(subtitle)
+    }
   }
 }
+
 
 extension ExempleViewController: ABSteppedProgressBarDelegate {
   
