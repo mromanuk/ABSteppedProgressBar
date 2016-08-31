@@ -11,10 +11,14 @@ import ABSteppedProgressBar
 
 class ExempleViewController: UIViewController {
   
+  
+  private var _processIsDone = false
+  
+  let progressBar = ABSteppedProgressBar()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let progressBar = ABSteppedProgressBar()
     progressBar.translatesAutoresizingMaskIntoConstraints = false
     self.view.addSubview(progressBar)
     
@@ -27,7 +31,7 @@ class ExempleViewController: UIViewController {
     
     
     // Customise the progress bar here
-    progressBar.numberOfPoints = 4
+    progressBar.numberOfPoints = 3
     progressBar.lineHeight = 15
     progressBar.radius = 20
     progressBar.progressRadius = 15
@@ -54,6 +58,11 @@ extension ExempleViewController: ABSteppedProgressBarDelegate {
   func progressBar(progressBar: ABSteppedProgressBar,
                    didSelectItemAtIndex index: Int) {
     print("progressBar:didSelectItemAtIndex:\(index)")
+    
+    if index == 2 {
+      self._processIsDone = true
+      self.progressBar.setNeedsDisplay()
+    }
   }
   
   func progressBar(progressBar: ABSteppedProgressBar,
@@ -71,11 +80,9 @@ extension ExempleViewController: ABSteppedProgressBarDelegate {
     case 0:
       text = "A"
     case 1:
-      text = "B"
+      text = self._processIsDone ? "Done" : "B"
     case 2:
       text = "C"
-    case 3:
-      text = "D"
     default:
       text = ""
     }
